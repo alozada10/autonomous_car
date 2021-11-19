@@ -1,0 +1,13 @@
+Environment:
+-cant escape environment
+-only straight forward
+-collide
+-areas of cars occupied
+-distance between cars
+Classes:
+Regular vehicle:
+-area for every car
+-function for updating ( outputs new positions and velocity different for each class)
+-position of the area occupied by the car'
+-safe distance(minimum ditance ds)
+-Horse power(How fast each car can accelerate, max acceleration)
