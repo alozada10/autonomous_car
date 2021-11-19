@@ -9,7 +9,7 @@ class RegularCar:
     def __str__(self):
         """
         stringify card attributes
-        :return: string of cards attributes
+        :return: type of the car
         """
         return "RegularCar"
 
@@ -26,11 +26,11 @@ class AutonomousCar:
         self.area = area
         self.safe_distance = safe_distance
         self.horse_power = horse_power
-    
+
     def __str__(self):
         """
         stringify card attributes
-        :return: string of cards attributes
+        :return: type of the car
         """
         return "AutonomousCar"
 
