@@ -14,8 +14,8 @@ def initialize(sizeOfPlane,numberOfCars,initialVelocities,roadPrecentage):
 
 
 #Test
-procent = 0.2
-road = 200
+procent = 0.2 # how wide the width of the road is
+road = 200 #plane size with a height
 v0 = [[1,0],[0,1],[1,0]]
 x0 = initialize(road,3,v0,procent)
 
