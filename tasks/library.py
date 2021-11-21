@@ -1,11 +1,17 @@
-class RegularCar:
-    def __init__(self,position,velocity,area,safe_distance,horse_power):
-        self.position = position
-        self.velocity = velocity
-        self.area = area
-        self.safe_distance = safe_distance
-        self.horse_power = horse_power
+class Car:
+    def __init__(self,environment,position,velocity,area,safe_distance,horse_power):
+            self.position = position
+            self.velocity = velocity
+            self.area = area
+            self.safe_distance = safe_distance
+            self.horse_power = horse_power
+            self.environment = environment
 
+    def update_postion_velocity(self):
+        pass
+
+class RegularCar(Car):
+    
     def __str__(self):
         """
         stringify card attributes
@@ -13,19 +19,7 @@ class RegularCar:
         """
         return "RegularCar"
 
-
-    def update_postion_velocity(self):
-        pass
-
-
-
-class AutonomousCar:
-    def __init__(self,position,velocity,area,safe_distance,horse_power):
-        self.position = position
-        self.velocity = velocity
-        self.area = area
-        self.safe_distance = safe_distance
-        self.horse_power = horse_power
+class AutonomousCar(Car):
 
     def __str__(self):
         """
@@ -33,6 +27,3 @@ class AutonomousCar:
         :return: type of the car
         """
         return "AutonomousCar"
-
-    def update_postion_velocity(self):
-        pass
