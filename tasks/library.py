@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Car:
     def __init__(self,environment,position,velocity,area,safe_distance,horse_power):
             self.position = position
@@ -18,6 +21,8 @@ class RegularCar(Car):
         :return: type of the car
         """
         return "RegularCar"
+
+
 
 class AutonomousCar(Car):
 
