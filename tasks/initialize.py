@@ -16,7 +16,6 @@ def initialize(sizeOfPlane,
             initialPosition.append(position)
     return np.asarray(initialPosition)
 
-'''
 #Test
 procent = 0.2 # how wide the width of the road is
 road = 200 #plane size with a height
@@ -35,4 +34,3 @@ plt.plot(x2,y2,'g')
 plt.plot(x3, y3, 'g')
 plt.plot( x4, y4, 'g')
 plt.show()
-'''
