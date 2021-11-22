@@ -5,12 +5,14 @@ def initialize(sizeOfPlane,
                axis,
                roadPrecentage):
     initialPosition = []
+    r_x = (sizeOfPlane+(2*np.random.rand()-1)*np.random.rand()*sizeOfPlane*roadPrecentage)/2
+    r_y = (sizeOfPlane+(2*np.random.rand()-1)*np.random.rand()*sizeOfPlane*roadPrecentage)/2
     for velocity in axis:
         if velocity == 'x':
-            position = [np.random.rand()*sizeOfPlane,(sizeOfPlane+(2*np.random.rand()-1)*np.random.rand()*sizeOfPlane*roadPrecentage)/2]
+            position = [np.random.rand()*sizeOfPlane,r_x]
             initialPosition.append(position)
         elif velocity == 'y':
-            position = [(sizeOfPlane+(2*np.random.rand()-1)*np.random.rand()*sizeOfPlane*roadPrecentage)/2,np.random.rand() * sizeOfPlane]
+            position = [r_y,np.random.rand() * sizeOfPlane]
             initialPosition.append(position)
     return np.asarray(initialPosition)
 
