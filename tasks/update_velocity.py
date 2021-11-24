@@ -10,6 +10,9 @@
 # delta_t: time step
 # delta: free parameter. Usually 4
 
+# output
+# new_velocity: updated velocity. 1D array
+
 import numpy as np
 
 
@@ -33,16 +36,3 @@ def update_velocity(a: float = None,
     new_velocity = v_current + delta_v
 
     return new_velocity
-
-
-c = update_velocity(a=1,
-                    b=1,
-                    v_current=np.array([1]),
-                    v_current_neighbor=np.array([0]),
-                    v_0=2,
-                    t_char=0.5,
-                    s_current=5,
-                    s_0=10,
-                    delta_t=1,
-                    delta=4)
-print(c)
