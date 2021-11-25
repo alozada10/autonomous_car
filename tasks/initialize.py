@@ -11,12 +11,14 @@ def initialize(sizeOfPlane,
     initialPosition = []
     r_x = (sizeOfPlane + (2 * np.random.rand() - 1) * np.random.rand() * sizeOfPlane * roadPrecentage) / 2
     r_y = (sizeOfPlane + (2 * np.random.rand() - 1) * np.random.rand() * sizeOfPlane * roadPrecentage) / 2
+    outside_box1 = np.random.rand() * 1/2 * (sizeOfPlane-roadPrecentage*sizeOfPlane)
+    outside_box2 = sizeOfPlane/2 + outside_box1
     for i in range(len(axis)):
         if axis[i] == 'x':
-            position = [np.random.rand() * sizeOfPlane, r_x, velocities[i], 0]
+            position = [np.random.choice([outside_box1,outside_box2]), r_x, velocities[i], 0]
             initialPosition.append(position)
         elif axis[i] == 'y':
-            position = [r_y, np.random.rand() * sizeOfPlane, velocities[i], 1]
+            position = [r_y, np.random.choice([outside_box1,outside_box2]), velocities[i], 1]
             initialPosition.append(position)
     return np.asarray(initialPosition), np.array([r_x, r_y])
 
