@@ -28,6 +28,8 @@ def update_velocity(a: float = None,
                     delta: float = 4):
     if len(v_current) != 1 or len(v_current_neighbor) != 1:
         raise ValueError("Current and neighbor velocity must be 1D!")
+    if v_current <= 5:
+        a = 20 * a
     v_delta = v_current - v_current_neighbor
     v_free_road = a * (1 - (v_current / v_0) ** delta)
     v_interaction = -a * (

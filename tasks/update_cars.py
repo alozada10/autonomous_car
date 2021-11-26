@@ -5,6 +5,7 @@ from autonomous_car.tasks import get_neighbors, update_velocity, update_position
 def update_cars(cars: np.array = None,
                 box_size: int = None,
                 light_status: int = None,
+                light_prob: float = None,
                 center: np.array = None,
                 size: int = None,
                 a: float = None,
@@ -33,18 +34,20 @@ def update_cars(cars: np.array = None,
                                                 s_0=s_0,
                                                 delta_t=delta_t,
                                                 delta=delta)
+
         if new_v < 0:
             new_v = np.array([0])
 
         new_car = update_position.update_position(car=car,
+                                                  all_cars=cars,
                                                   light_status=light_status,
+                                                  light_prob=light_prob,
                                                   box_size=box_size,
                                                   center=center,
                                                   axis=car[3],
                                                   delta_t=delta_t,
                                                   size=size,
                                                   new_velocity=new_v)
-        new_car[2] = new_v
         temp_cars.append(new_car)
     new_cars = np.array(temp_cars)
 
