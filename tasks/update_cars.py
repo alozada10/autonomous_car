@@ -16,6 +16,7 @@ def update_cars(cars: np.array = None,
                 delta_t: float = None,
                 delta: float = 4):
     temp_cars = []
+    temp_v = []
     for car in cars:
 
         n_distance, neighbor = get_neighbors.get_neighbor_distance(r=car,
@@ -49,6 +50,7 @@ def update_cars(cars: np.array = None,
                                                   size=size,
                                                   new_velocity=new_v)
         temp_cars.append(new_car)
+        temp_v.append(new_v)
     new_cars = np.array(temp_cars)
 
-    return new_cars
+    return new_cars, np.mean(temp_v)

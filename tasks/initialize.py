@@ -2,25 +2,42 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def initialize(sizeOfPlane,
-               axis,
-               velocities,
-               roadPrecentage):
+def initialize(size: float = None,
+               axis: list = None,
+               velocities: np.array = None,
+               lane_percentage: float = None,
+               min_distance: float = None):
     if len(axis) != len(velocities):
         raise ValueError("Directions a velocities need the same number of elements!")
-    initialPosition = []
-    r_x = (sizeOfPlane + (2 * np.random.rand() - 1) * np.random.rand() * sizeOfPlane * roadPrecentage) / 2
-    r_y = (sizeOfPlane + (2 * np.random.rand() - 1) * np.random.rand() * sizeOfPlane * roadPrecentage) / 2
-    outside_box1 = np.random.rand() * 1 / 2 * (sizeOfPlane - roadPrecentage * sizeOfPlane)
-    outside_box2 = sizeOfPlane / 2 + outside_box1
+    r_x = (size + (2 * np.random.rand() - 1) * np.random.rand() * size * lane_percentage) / 2
+    r_y = (size + (2 * np.random.rand() - 1) * np.random.rand() * size * lane_percentage) / 2
+    pos_x = np.arange(0, size, min_distance)
+    pos_y = np.arange(0, size, min_distance)
+    pos_x_right = pos_x[(pos_x >= r_x + (size * lane_percentage) / 2)]
+    pos_x_left = pos_x[(pos_x <= r_x - (size * lane_percentage) / 2)]
+    pos_x = np.concatenate([pos_x_left, pos_x_right])
+    pos_y_right = pos_y[(pos_y >= r_y + (size * lane_percentage) / 2)]
+    pos_y_left = pos_y[(pos_y <= r_y - (size * lane_percentage) / 2)]
+    pos_y = np.concatenate([pos_y_left, pos_y_right])
+    if (len(axis) > len(pos_x)) or (len(axis) > len(pos_y)):
+        raise ValueError("Too many cars for initial given minimum distance!")
+
+    cars = []
+
     for i in range(len(axis)):
         if axis[i] == 'x':
-            position = [np.random.choice([outside_box1, outside_box2]), r_x, velocities[i], 0]
-            initialPosition.append(position)
+            car_x = np.random.choice(pos_x, 1)[0]
+            position = [car_x, r_x, velocities[i], 0]
+            index_r = np.argwhere(pos_x == car_x)[0][0]
+            pos_x = np.delete(pos_x, index_r)
+            cars.append(position)
         elif axis[i] == 'y':
-            position = [r_y, np.random.choice([outside_box1, outside_box2]), velocities[i], 1]
-            initialPosition.append(position)
-    return np.asarray(initialPosition), np.array([r_y, r_x])
+            car_y = np.random.choice(pos_y, 1)[0]
+            position = [r_y, car_y, velocities[i], 1]
+            index_r = np.argwhere(pos_y == car_y)[0][0]
+            pos_y = np.delete(pos_y, index_r)
+            cars.append(position)
+    return np.asarray(cars), np.array([r_y, r_x])
 
 
 '''
