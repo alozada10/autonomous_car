@@ -4,10 +4,10 @@ import autonomous_car.tasks.initialize as initialize
 from autonomous_car.tasks import update_cars
 from autonomous_car.tasks import utils as ut
 
-iterations = 1000
+iterations = 1
 box_size = 100
 size = 2000
-number_cars = 20
+number_cars = 2
 time_step = 1
 time_lights = 20
 max_acc = 0.73
