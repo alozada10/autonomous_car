@@ -4,18 +4,20 @@ import autonomous_car.tasks.initialize as initialize
 from autonomous_car.tasks import update_cars
 from autonomous_car.tasks import utils as ut
 
-iterations = 1
+iterations = 100
 box_size = 100
-size = 2000
-number_cars = 2
+size = 2900
+number_cars = 90
+percentage_autonomous = 0
 time_step = 1
 time_lights = 20
 max_acc = 0.73
 regular_decc = 1.67
 freeway_velocity = 50
-minimum_distance = 10
+minimum_distance = 20
 safe_time_headway = 1.5
 light_prob = 1
+vs = 0.5
 
 initial_velocities = np.random.randint(10, 50, number_cars)
 initial_directions = np.random.choice(['x', 'y'],
@@ -23,6 +25,7 @@ initial_directions = np.random.choice(['x', 'y'],
 initial_cars, center = initialize.initialize(size=size,
                                              axis=initial_directions,
                                              velocities=initial_velocities,
+                                             autonomous_precentage=percentage_autonomous,
                                              lane_percentage=0.3,
                                              min_distance=minimum_distance)
 # initial_cars= np.array([[1,50,3,0],[30,50,2,0],[50,7,3,1],[50,1,4,1]])*1.0
@@ -32,7 +35,7 @@ result = [initial_cars]
 light_status = np.random.choice([0, 1], 1)[0]
 ligths = [light_status]
 result_velocities = [np.mean(initial_velocities)]
-print(center)
+
 for t in range(1, iterations):
     if t % time_lights == 0:
         light_status = abs(light_status - 1)
@@ -49,14 +52,15 @@ for t in range(1, iterations):
                                                t_char=safe_time_headway,
                                                s_0=minimum_distance,
                                                delta_t=time_step,
-                                               delta=4)
+                                               delta=4,
+                                               vs=vs)
     # print('new pop', new_cars)
     result.append(new_cars)
     result_velocities.append(mean_v)
 
     initial_cars = new_cars
 
-result_plot = [i[:, 0:2] for i in result]
+result_plot = result.copy()
 
 fig = px.scatter(ut.turn_time_series(data=result_plot,
                                      center=center,
@@ -69,11 +73,10 @@ fig = px.scatter(ut.turn_time_series(data=result_plot,
                  width=500,
                  height=500)
 fig.show()
-result = np.array(result)
-print(result.shape)
-result_reshaped = result.reshape(result.shape[0], -1)
-np.savetxt("result.txt", result_reshaped)
-ligths = np.array(ligths)
-np.savetxt("lights.txt", ligths)
-velocities_final = np.array(result_velocities)
-np.savetxt("vel.csv", velocities_final)
+#result = np.array(result)
+#result_reshaped = result.reshape(result.shape[0], -1)
+#np.savetxt("result.txt", result_reshaped)
+#ligths = np.array(ligths)
+#np.savetxt("lights.txt", ligths)
+#velocities_final = np.array(result_velocities)
+#np.savetxt("vel.csv", velocities_final)

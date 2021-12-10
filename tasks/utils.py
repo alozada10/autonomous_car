@@ -16,9 +16,10 @@ def create_virtual_env(all_positions, side_size):
     x = all_positions[:, 0].copy()
     y = all_positions[:, 1].copy()
     v = all_positions[:, 2].copy()
-
-    up = np.array([np.array([i, j, k, 1]) for i, j, k in zip(x, y + side_size, v)])
-    right = np.array([np.array([i, j, k, 0]) for i, j, k in zip(x + side_size, y, v)])
+    c = all_positions[:, 4].copy()
+    w = all_positions[:, 5].copy()
+    up = np.array([np.array([i, j, k, 1, z, we]) for i, j, k, z, we in zip(x, y + side_size, v, c, w)])
+    right = np.array([np.array([i, j, k, 0, z, we]) for i, j, k, z, we in zip(x + side_size, y, v, c, w)])
 
     return np.concatenate([all_positions, up, right])
 
@@ -45,17 +46,18 @@ def turn_time_series(data,
                      boxsize,
                      lights):
     df = pd.DataFrame(
-        {'x': [-1, -1, -1, -1],
-         'y': [-1, -1, -1, -1],
-         'type': ['green_light', 'red_light', 'regular', 'center'],
-         'generation': [-1, -1, -1, -1]})
+        {'x': [-1, -1, -1, -1, -1],
+         'y': [-1, -1, -1, -1, -1],
+         'type': ['green_light', 'red_light', 'regular', 'autonomous', 'center'],
+         'generation': [-1, -1, -1, -1, -1]})
     light_labels_x = {0: 'green_light', 1: 'red_light'}
     light_labels_y = {0: 'red_light', 1: 'green_light'}
+    car_labels = {0: 'regular', 1: 'autonomous'}
 
     for i in range(len(data)):
         temp_df = pd.DataFrame({'x': data[i][:, 0],
                                 'y': data[i][:, 1],
-                                'type': ['regular'] * len(data[i]),
+                                'type': [car_labels[i] for i in data[i][:, 4]],
                                 'generation': i})
         lights_df = pd.DataFrame({'x': [center[0] - boxsize / 3,
                                         center[0] + boxsize / 3],
